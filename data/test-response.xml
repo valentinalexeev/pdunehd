@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<command_result>
+<param name="protocol_version" value="1"/>
+<param name="command_status" value="ok"/>
+<param name="player_state" value="dvd_playback"/>
+<param name="playback_speed" value="256"/>
+<param name="playback_duration" value="5183"/>
+<param name="playback_position" value="3000"/>
+<param name="playback_dvd_menu" value="0"/>
+<param name="playback_is_buffering" value="0"/>
+</command_result>
