@@ -37,10 +37,16 @@ class DuneHDPlayer():
 		return self.__send_command('status')
 
 	def turn_on(self):
-		return self.__send_command('ir_code', { 'ir_code': 'A05FBF00' })
+		return self.__send_ir_code('A05FBF00')
 
 	def turn_off(self):
-		return self.__send_command('ir_code', { 'ir_code': 'A15EBF00' })
+		return self.__send_ir_code('A15EBF00')
+
+	def previous_track(self):
+		return self.__send_ir_code('B649BF00')
+
+	def next_track(self):
+		return self.__send_ir_code('E21DBF00')
 
 	def volumeUp(self):
 		state = self.update_state()
@@ -58,6 +64,9 @@ class DuneHDPlayer():
 
 	def get_last_state(self):
 		return self._lastState
+
+	def __set_ir_code(self, code):
+		return self.__send_command('ir_code', { 'ir_code': code })
 
 	def __change_playback_speed(self, newSpeed):
 		return self.__send_command('set_playback_state', { 'speed': newSpeed })
