@@ -13,55 +13,61 @@ STATE_PARSER = re.compile('.*name="(.*)" value="(.*)"')
 class DuneHDPlayer():
 	def __init__(self, address):
 		self._address = address
-		self.updateState()
+		self.update_state()
 
-	def launchMediaUrl(self, mediaUrl):
-		return self.__sendCommand('launch_media_url', {'media_url': mediaUrl})
+	def launch_media_url(self, mediaUrl):
+		return self.__send_command('launch_media_url', {'media_url': mediaUrl})
 
 	def play(self):
-		return self.__changePlaybackSpeed(PLAYBACK_SPEED_PLAY)
+		return self.__change_playback_speed(PLAYBACK_SPEED_PLAY)
 
 	def pause(self):
-		return self.__changePlaybackSpeed(PLAYBACK_SPEED_PAUSE)
+		return self.__change_playback_speed(PLAYBACK_SPEED_PAUSE)
 	
 	def ffwd(self):
-		return self.__changePlaybackSpeed(PLAYBACK_SPEED_FFWD)
+		return self.__change_playback_speed(PLAYBACK_SPEED_FFWD)
 
 	def rwd(self):
-		return self.__changePlaybackSpeed(PLAYBACK_SPEED_RWD)
+		return self.__change_playback_speed(PLAYBACK_SPEED_RWD)
 
 	def stop(self):
-		return self.__sendCommand('standby')
+		return self.__send_command('standby')
 
-	def updateState(self):
-		return self.__sendCommand('status')
+	def update_state(self):
+		return self.__send_command('status')
+
+	def turn_on(self):
+		return self.__send_command('ir_code', { 'ir_code': 'A05FBF00' })
+
+	def turn_off(self):
+		return self.__send_command('ir_code', { 'ir_code': 'A15EBF00' })
 
 	def volumeUp(self):
-		state = self.updateState()
-		return self.__sendCommand('set_playback_state', {'volume': max(100, int(state.get('playback_volume', 0)) + 10)})
+		state = self.update_state()
+		return self.__send_command('set_playback_state', {'volume': max(100, int(state.get('playback_volume', 0)) + 10)})
 
 	def volumeDown(self):
-		state = self.updateState()
-		return self.__sendCommand('set_playback_state', {'volume': min(0, int(state.get('playback_volume', 0)) - 10)})
+		state = self.update_state()
+		return self.__send_command('set_playback_state', {'volume': min(0, int(state.get('playback_volume', 0)) - 10)})
 
 	def mute(self, mute = True):
 		if mute:
-			return self.__sendCommand('set_playback_state', {'mute': 1})
+			return self.__send_command('set_playback_state', {'mute': 1})
 		else:
-			return self.__sendCommand('set_playback_state', {'mute': 0})
+			return self.__send_command('set_playback_state', {'mute': 0})
 
-	def getLastState(self):
+	def get_last_state(self):
 		return self._lastState
 
-	def __changePlaybackSpeed(self, newSpeed):
-		return self.__sendCommand('set_playback_state', { 'speed': newSpeed })
+	def __change_playback_speed(self, newSpeed):
+		return self.__send_command('set_playback_state', { 'speed': newSpeed })
 
-	def __parseStatus(self, status):
+	def __parse_status(self, status):
 		statuses = STATE_PARSER.findall(status)
 		self._lastState = { val[0]: val[1] for val in statuses }
 		return self._lastState
 
-	def __sendCommand(self, cmd, params = {}):
+	def __send_command(self, cmd, params = {}):
 		params["cmd"] = cmd
 		r = requests.get(
 			BASE_COMMAND_URL_FORMAT.format(self._address),
@@ -69,6 +75,6 @@ class DuneHDPlayer():
 			)
 
 		if r.status_code == 200:
-			return self.__parseStatus(r.text)
+			return self.__parse_status(r.text)
 		else:
 			raise Exception("Unable to commucate with Dune HD")
