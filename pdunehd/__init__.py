@@ -65,7 +65,7 @@ class DuneHDPlayer():
 	def get_last_state(self):
 		return self._lastState
 
-	def __set_ir_code(self, code):
+	def __send_ir_code(self, code):
 		return self.__send_command('ir_code', { 'ir_code': code })
 
 	def __change_playback_speed(self, newSpeed):

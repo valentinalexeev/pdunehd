@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='pdunehd',
-	version='1.2',
+	version='1.3',
 	description='A Python wrapper for Dune HD media player API',
 	author='Valentin Alexeev',
 	author_email='valentin.alekseev@gmail.com',
