@@ -89,4 +89,4 @@ class DuneHDPlayer():
 		if r.status_code == 200:
 			return self.__parse_status(r.text)
 		else:
-			raise Exception("Unable to commucate with Dune HD")
+			return {}
