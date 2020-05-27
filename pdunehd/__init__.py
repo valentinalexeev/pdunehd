@@ -15,7 +15,6 @@ TIMEOUT = 10
 class DuneHDPlayer():
 	def __init__(self, address):
 		self._address = address
-		self.update_state()
 
 	def launch_media_url(self, mediaUrl):
 		return self.__send_command('launch_media_url', {'media_url': mediaUrl})
