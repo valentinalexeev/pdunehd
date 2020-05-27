@@ -10,6 +10,8 @@ PLAYBACK_SPEED_RWD = -512
 
 STATE_PARSER = re.compile('.*name="(.*)" value="(.*)"')
 
+TIMEOUT = 10
+
 class DuneHDPlayer():
 	def __init__(self, address):
 		self._address = address
@@ -81,9 +83,10 @@ class DuneHDPlayer():
 		try:
 			r = requests.get(
 				BASE_COMMAND_URL_FORMAT.format(self._address),
-				params = params
+				params = params,
+				timeout = TIMEOUT
 				)
-		except requests.exceptions.ConnectionError:
+		except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
 			return {}
 
 		if r.status_code == 200:
