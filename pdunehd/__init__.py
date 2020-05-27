@@ -23,7 +23,7 @@ class DuneHDPlayer():
 
 	def pause(self):
 		return self.__change_playback_speed(PLAYBACK_SPEED_PAUSE)
-	
+
 	def ffwd(self):
 		return self.__change_playback_speed(PLAYBACK_SPEED_FFWD)
 
@@ -78,12 +78,15 @@ class DuneHDPlayer():
 
 	def __send_command(self, cmd, params = {}):
 		params["cmd"] = cmd
-		r = requests.get(
-			BASE_COMMAND_URL_FORMAT.format(self._address),
-			params = params
-			)
+		try:
+			r = requests.get(
+				BASE_COMMAND_URL_FORMAT.format(self._address),
+				params = params
+				)
+		except requests.exceptions.ConnectionError:
+			return {}
 
 		if r.status_code == 200:
 			return self.__parse_status(r.text)
 		else:
-			raise Exception("Unable to commucate with Dune HD")
+			return {}
