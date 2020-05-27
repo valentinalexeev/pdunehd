@@ -10,7 +10,7 @@ PLAYBACK_SPEED_RWD = -512
 
 STATE_PARSER = re.compile('.*name="(.*)" value="(.*)"')
 
-TIMEOUT = 10
+TIMEOUT = 5
 
 class DuneHDPlayer():
 	def __init__(self, address):
