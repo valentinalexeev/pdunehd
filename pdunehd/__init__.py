@@ -35,7 +35,10 @@ class DuneHDPlayer():
 		return self.__send_command('standby')
 
 	def update_state(self):
-		return self.__send_command('status')
+		state = self.__send_command('status')
+		if state.get('playback_url'):
+			state['playback_url'] = state['playback_url'].encode('latin1').decode('utf8')
+		return state
 
 	def turn_on(self):
 		return self.__send_ir_code('A05FBF00')
