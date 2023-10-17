@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pdunehd",
-    version="1.3.2",
+    version="1.3.3",
     author="Valentin Alexeev",
     author_email="valentin.alekseev@gmail.com",
     description="A Python wrapper for Dune HD media player API",
