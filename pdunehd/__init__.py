@@ -54,11 +54,11 @@ class DuneHDPlayer():
 
 	def volumeUp(self):
 		state = self.update_state()
-		return self.__send_command('set_playback_state', {'volume': max(100, int(state.get('playback_volume', 0)) + 10)})
+		return self.__send_command('set_playback_state', {'volume': min(100, int(state.get('playback_volume', 0)) + 10)})
 
 	def volumeDown(self):
 		state = self.update_state()
-		return self.__send_command('set_playback_state', {'volume': min(0, int(state.get('playback_volume', 0)) - 10)})
+		return self.__send_command('set_playback_state', {'volume': max(0, int(state.get('playback_volume', 0)) - 10)})
 
 	def mute(self, mute = True):
 		if mute:
