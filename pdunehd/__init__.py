@@ -52,6 +52,9 @@ class DuneHDPlayer():
 	def next_track(self):
 		return self.__send_ir_code('E21DBF00')
 
+	def volume_set(self, volume):
+		return self.__send_command('set_playback_state', {'volume': volume})
+
 	def volumeUp(self):
 		state = self.update_state()
 		return self.__send_command('set_playback_state', {'volume': min(100, int(state.get('playback_volume', 0)) + 10)})
